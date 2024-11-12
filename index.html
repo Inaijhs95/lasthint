@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>競馬予想サイト - 最新の競走馬予想</title>
+    <title>競馬予想サイト - 100%的中！？</title>
     <style>
         body {
             background: linear-gradient(45deg, #ff0000, #ff8c00, #ffff00, #32cd32, #00ffff, #0000ff, #8a2be2);
@@ -14,8 +14,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            justify-content: flex-start;
             padding: 20px;
         }
 
@@ -26,8 +25,8 @@
         }
 
         .container {
-            max-width: 600px;
-            background: rgba(0, 0, 0, 0.8);
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.9);
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(255, 255, 255, 0.5);
@@ -35,52 +34,77 @@
         }
 
         h1 {
-            font-size: 36px;
+            font-size: 40px;
             color: #ffcc00;
-            text-shadow: 2px 2px 8px #000;
+            text-shadow: 2px 2px 10px #000;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #ffd700;
         }
 
         .button-primary {
-            padding: 15px 30px;
-            font-size: 22px;
+            padding: 15px 40px;
+            font-size: 24px;
             color: #fff;
             background-color: #ff4500;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: transform 0.3s, background-color 0.3s;
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.8);
         }
 
         .button-primary:hover {
             transform: scale(1.1);
+            background-color: #ff6347;
         }
 
         #prediction {
-            font-size: 24px;
+            font-size: 26px;
             color: #ffcc00;
             margin-top: 20px;
+            text-shadow: 1px 1px 10px #000;
         }
 
         .link-button {
-            margin-top: 20px;
-            font-size: 20px;
+            margin-top: 30px;
+            font-size: 22px;
             color: #fff;
-            background-color: #00ff00;
-            padding: 15px 30px;
-            border-radius: 8px;
+            background-color: #32cd32;
+            padding: 15px 40px;
+            border-radius: 10px;
             text-decoration: none;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+        }
+
+        .link-button:hover {
+            background-color: #28a745;
         }
 
         .real-time-winner {
-            margin-top: 30px;
-            font-size: 16px;
+            margin-top: 40px;
+            font-size: 18px;
             color: #ff69b4;
+            animation: slide-up 2s ease infinite;
+        }
+
+        @keyframes slide-up {
+            0% { transform: translateY(100%); opacity: 0; }
+            50% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100%); opacity: 0; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ギラギラ競馬予想サイト</h1>
+        <h1>100％的中の競馬予想！</h1>
+        <p class="description">
+            今週末のレースに向けて、プロの予想を無料公開中！<br>的中率100％の予想を今すぐ確認しましょう！
+        </p>
         <button class="button-primary" onclick="showPrediction()">予想を見る</button>
         <p id="prediction"></p>
         <a id="external-link" href="https://inaijhs95.my.canva.site/secret2025" class="link-button" style="display: none;">詳しい情報を見る</a>
@@ -106,7 +130,6 @@
         ];
 
         const venues = ["東京", "京都", "中山", "阪神", "新潟", "福島", "札幌", "函館", "中京", "小倉"];
-        const daysOfWeek = ["土", "日"];
         const races = Array.from({ length: 12 }, (_, i) => `${i + 1}R`);
 
         function getNextWeekend() {
