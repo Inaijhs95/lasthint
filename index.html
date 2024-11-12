@@ -3,163 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30万円プレゼントキャンペーン - 招待専用</title>
+    <title>競馬予想サイト - 最新の競走馬予想</title>
     <style>
         body {
-            background-color: #f4f4f4;
-            color: #333;
-            font-family: "Helvetica Neue", sans-serif;
-            margin: 0;
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
             min-height: 100vh;
             padding: 20px;
         }
         .container {
             max-width: 600px;
-            background: #ffffff;
+            background: #333;
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
             text-align: center;
-            margin-bottom: 20px;
         }
         h1 {
-            font-size: 26px;
-            color: #222;
-            margin-bottom: 20px;
+            font-size: 28px;
+            color: #ffcc00;
         }
         .description {
             font-size: 18px;
-            color: #444;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         .button-primary {
             padding: 15px 30px;
-            font-size: 18px;
+            font-size: 20px;
             color: #fff;
-            background-color: #333;
+            background-color: #007bff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         .button-primary:hover {
-            background-color: #444;
+            background-color: #0056b3;
         }
-        #result {
-            font-size: 18px;
-            color: #444;
+        #prediction {
+            font-size: 22px;
+            color: #ffcc00;
             margin-top: 20px;
-            display: none;
         }
         .link-button {
             margin-top: 20px;
             font-size: 18px;
             color: #fff;
-            background-color: #007bff;
+            background-color: #28a745;
             padding: 12px 24px;
             border-radius: 5px;
-            border: none;
-            cursor: pointer;
             text-decoration: none;
             display: inline-block;
         }
         .link-button:hover {
-            background-color: #0056b3;
-        }
-        .testimonials {
-            margin-top: 30px;
-            text-align: left;
-        }
-        .testimonials h2 {
-            font-size: 16px;
-            color: #999;
-            margin-bottom: 10px;
-        }
-        .testimonials p {
-            display: none;
-            margin: 5px 0;
-            transition: opacity 1s ease-in-out;
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 8px;
+            background-color: #218838;
         }
         .real-time-winner {
             margin-top: 30px;
-            text-align: left;
             font-size: 14px;
-            color: #333;
-        }
-        .real-time-winner p {
-            font-weight: bold;
-            animation: slide-up 2s ease infinite;
+            color: #ddd;
         }
         @keyframes slide-up {
             0% { transform: translateY(100%); opacity: 0; }
             50% { transform: translateY(0); opacity: 1; }
             100% { transform: translateY(-100%); opacity: 0; }
         }
+        .winner-notification {
+            font-weight: bold;
+            animation: slide-up 2s ease infinite;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>30万円プレゼント<br>キャンペーン</h1>
+        <h1>最新の競走馬予想</h1>
         <p class="description">
-            特別な招待を受けた方のみが参加可能なキャンペーンです。<br>抽選で<b>30万円</b>を贈呈いたします。さっそく抽選をスタートし、<br>幸運を引き寄せてください。
+            最新の競走馬情報を基にした予想をお届けします。<br>今すぐ予想を確認して、次のレースに備えましょう！
         </p>
+        <button class="button-primary" onclick="showPrediction()">予想を見る</button>
+        <p id="prediction"></p>
+        <a id="external-link" href="https://db.netkeiba.com/" class="link-button" style="display: none;">詳しい情報を見る</a>
 
-        <button class="button-primary" onclick="startLottery()">抽選スタート</button>
-
-        <p id="result"></p>
-        <a id="secret-link" href="https://inaijhs95.my.canva.site/secret2025" class="link-button" style="display: none;">特別ページへ進む</a>
-    </div>
-
-    <!-- 当選者の声 -->
-    <div class="testimonials">
-        <h2>当選者の声</h2>
-        <p>“最高のキャンペーンです！” - S・Mさん</p>
-        <p>“30万円が当たるなんて信じられません！” - K・Tさん</p>
-        <p>“このチャンスを掴めて良かったです！” - M・Aさん</p>
-        <p>“迅速で丁寧な対応、最高です！” - R・Yさん</p>
-        <p>“このキャンペーンは本当に素晴らしいです！” - Y・Nさん</p>
-    </div>
-
-    <!-- リアルタイム当選報告 -->
-    <div class="real-time-winner">
-        <h2>リアルタイム当選報告</h2>
-        <p id="winner-notification">埼玉県・S・Aさん 30万円当選しました！<br>12時34分56秒</p>
+        <!-- リアルタイム当選報告 -->
+        <div class="real-time-winner">
+            <p id="winner-notification">東京都・A・Sさん 100万円的中しました！</p>
+        </div>
     </div>
 
     <script>
-        function startLottery() {
-            const button = document.querySelector(".button-primary");
-            button.disabled = true;
-            button.style.backgroundColor = "#aaa";
-            button.innerText = "結果を確認中...";
+        const horses = [
+            "ヒシアマン",
+            "ドウデュース",
+            "オーサムリザルト",
+            "ゴージャス",
+            "クロミナンス",
+            "フォーエバーヤング",
+            "シンビリーブ",
+            "エイシンワンド",
+            "セレシオン",
+            "ショウナンバシット"
+        ];
 
-            setTimeout(() => {
-                const result = document.getElementById("result");
-                const secretLink = document.getElementById("secret-link");
+        function showPrediction() {
+            const prediction = document.getElementById("prediction");
+            const link = document.getElementById("external-link");
+            const randomHorse = horses[Math.floor(Math.random() * horses.length)];
 
-                result.innerText = "残念！ハズれてしまいました。";
-                result.style.display = "block";
-                secretLink.style.display = "inline-block";
-            }, 3000);
+            prediction.innerText = `本日の注目馬：${randomHorse}`;
+            link.style.display = "inline-block";
         }
-
-        // 当選者の声の表示アニメーション
-        const testimonials = document.querySelectorAll(".testimonials p");
-        let testimonialIndex = 0;
-        setInterval(() => {
-            testimonials.forEach((testimonial, index) => {
-                testimonial.style.display = index === testimonialIndex ? "block" : "none";
-            });
-            testimonialIndex = (testimonialIndex + 1) % testimonials.length;
-        }, 3800);
 
         // リアルタイム当選報告の表示更新
         const winnerNotification = document.getElementById("winner-notification");
@@ -169,10 +126,9 @@
         setInterval(() => {
             const randomPrefecture = prefectures[Math.floor(Math.random() * prefectures.length)];
             const randomInitial = `${initials[Math.floor(Math.random() * initials.length)]}・${initials[Math.floor(Math.random() * initials.length)]}`;
-            const currentTime = new Date();
-            const timeString = `${currentTime.getHours()}時${String(currentTime.getMinutes()).padStart(2, "0")}分${String(currentTime.getSeconds()).padStart(2, "0")}秒`;
-            winnerNotification.innerHTML = `${randomPrefecture}・${randomInitial}さん 30万円当選しました！<br>${timeString}`;
-        }, 2000);
+            const randomPrize = Math.floor(Math.random() * 100) + 10; // 10万円から100万円の範囲
+            winnerNotification.innerHTML = `${randomPrefecture}・${randomInitial}さん ${randomPrize}万円的中しました！`;
+        }, 3000);
     </script>
 </body>
 </html>
