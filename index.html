@@ -6,9 +6,11 @@
     <title>競馬予想サイト - 最新の競走馬予想</title>
     <style>
         body {
-            background-color: #222;
+            background: linear-gradient(45deg, #ff0000, #ff8c00, #ffff00, #32cd32, #00ffff, #0000ff, #8a2be2);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s infinite alternate;
             color: #fff;
-            font-family: Arial, sans-serif;
+            font-family: "Arial Black", sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -16,119 +18,138 @@
             min-height: 100vh;
             padding: 20px;
         }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .container {
             max-width: 600px;
-            background: #333;
+            background: rgba(0, 0, 0, 0.8);
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.5);
             text-align: center;
         }
+
         h1 {
-            font-size: 28px;
+            font-size: 36px;
             color: #ffcc00;
+            text-shadow: 2px 2px 8px #000;
         }
-        .description {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
+
         .button-primary {
             padding: 15px 30px;
-            font-size: 20px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .button-primary:hover {
-            background-color: #0056b3;
-        }
-        #prediction {
             font-size: 22px;
+            color: #fff;
+            background-color: #ff4500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .button-primary:hover {
+            transform: scale(1.1);
+        }
+
+        #prediction {
+            font-size: 24px;
             color: #ffcc00;
             margin-top: 20px;
         }
+
         .link-button {
             margin-top: 20px;
-            font-size: 18px;
+            font-size: 20px;
             color: #fff;
-            background-color: #28a745;
-            padding: 12px 24px;
-            border-radius: 5px;
+            background-color: #00ff00;
+            padding: 15px 30px;
+            border-radius: 8px;
             text-decoration: none;
-            display: inline-block;
         }
-        .link-button:hover {
-            background-color: #218838;
-        }
+
         .real-time-winner {
             margin-top: 30px;
-            font-size: 14px;
-            color: #ddd;
-        }
-        @keyframes slide-up {
-            0% { transform: translateY(100%); opacity: 0; }
-            50% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-100%); opacity: 0; }
-        }
-        .winner-notification {
-            font-weight: bold;
-            animation: slide-up 2s ease infinite;
+            font-size: 16px;
+            color: #ff69b4;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>最新の競走馬予想</h1>
-        <p class="description">
-            最新の競走馬情報を基にした予想をお届けします。<br>今すぐ予想を確認して、次のレースに備えましょう！
-        </p>
+        <h1>ギラギラ競馬予想サイト</h1>
         <button class="button-primary" onclick="showPrediction()">予想を見る</button>
         <p id="prediction"></p>
-        <a id="external-link" href="https://db.netkeiba.com/" class="link-button" style="display: none;">詳しい情報を見る</a>
+        <a id="external-link" href="https://inaijhs95.my.canva.site/secret2025" class="link-button" style="display: none;">詳しい情報を見る</a>
 
         <!-- リアルタイム当選報告 -->
         <div class="real-time-winner">
-            <p id="winner-notification">東京都・A・Sさん 100万円的中しました！</p>
+            <p id="winner-notification"></p>
         </div>
     </div>
 
     <script>
         const horses = [
-            "ヒシアマン",
+            "イクイノックス",
+            "ジャスティンパレス",
+            "リバティアイランド",
+            "スターズオンアース",
+            "ヴェラアズール",
+            "ソングライン",
             "ドウデュース",
-            "オーサムリザルト",
-            "ゴージャス",
-            "クロミナンス",
-            "フォーエバーヤング",
-            "シンビリーブ",
-            "エイシンワンド",
-            "セレシオン",
-            "ショウナンバシット"
+            "ディープボンド",
+            "シャフリヤール",
+            "ピクシーナイト"
         ];
+
+        const venues = ["東京", "京都", "中山", "阪神", "新潟", "福島", "札幌", "函館", "中京", "小倉"];
+        const daysOfWeek = ["土", "日"];
+        const races = Array.from({ length: 12 }, (_, i) => `${i + 1}R`);
+
+        function getNextWeekend() {
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const daysUntilSaturday = (6 - dayOfWeek + 7) % 7 || 7;
+            const nextSaturday = new Date(today);
+            nextSaturday.setDate(today.getDate() + daysUntilSaturday);
+
+            return nextSaturday;
+        }
+
+        function formatDate(date) {
+            return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+        }
 
         function showPrediction() {
             const prediction = document.getElementById("prediction");
             const link = document.getElementById("external-link");
             const randomHorse = horses[Math.floor(Math.random() * horses.length)];
+            const venue = venues[Math.floor(Math.random() * venues.length)];
+            const race = races[Math.floor(Math.random() * races.length)];
+            const nextWeekend = getNextWeekend();
+            const dateStr = formatDate(nextWeekend);
 
-            prediction.innerText = `本日の注目馬：${randomHorse}`;
+            prediction.innerText = `${dateStr} ${venue} ${race} 3連単予想：${Math.floor(Math.random() * 18) + 1}-${Math.floor(Math.random() * 18) + 1}-${Math.floor(Math.random() * 18) + 1}`;
             link.style.display = "inline-block";
         }
 
-        // リアルタイム当選報告の表示更新
-        const winnerNotification = document.getElementById("winner-notification");
-        const prefectures = ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"];
-        const initials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        setInterval(() => {
-            const randomPrefecture = prefectures[Math.floor(Math.random() * prefectures.length)];
+        function updateWinnerNotification() {
+            const winnerNotification = document.getElementById("winner-notification");
+            const venue = venues[Math.floor(Math.random() * venues.length)];
+            const nextWeekend = getNextWeekend();
+            const dateStr = formatDate(nextWeekend);
+            const initials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const randomInitial = `${initials[Math.floor(Math.random() * initials.length)]}・${initials[Math.floor(Math.random() * initials.length)]}`;
-            const randomPrize = Math.floor(Math.random() * 100) + 10; // 10万円から100万円の範囲
-            winnerNotification.innerHTML = `${randomPrefecture}・${randomInitial}さん ${randomPrize}万円的中しました！`;
-        }, 3000);
+            const randomPrize = Math.floor(Math.random() * 200) + 50;
+
+            winnerNotification.innerHTML = `${dateStr} ${venue}競馬 ${randomInitial}さん ${randomPrize}万円的中しました！`;
+        }
+
+        setInterval(updateWinnerNotification, 5000);
+        updateWinnerNotification();
     </script>
 </body>
 </html>
