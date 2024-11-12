@@ -3,176 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>競馬予想サイト - 100%的中！？</title>
+    <title>競馬予想 - 的中率100％！</title>
     <style>
         body {
-            background: linear-gradient(45deg, #ff0000, #ff8c00, #ffff00, #32cd32, #00ffff, #0000ff, #8a2be2);
-            background-size: 400% 400%;
-            animation: gradientAnimation 10s infinite alternate;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #4caf50;
             color: #fff;
-            font-family: "Arial Black", sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
+            text-align: center;
             padding: 20px;
         }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
-
-        .container {
-            max-width: 800px;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.5);
+        h1 {
+            font-size: 28px;
+            color: #4caf50;
             text-align: center;
         }
-
-        h1 {
-            font-size: 40px;
-            color: #ffcc00;
-            text-shadow: 2px 2px 10px #000;
+        .description {
+            font-size: 18px;
+            text-align: center;
             margin-bottom: 20px;
         }
-
-        .description {
+        .cta-button {
+            display: block;
+            width: 80%;
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 15px;
             font-size: 20px;
-            margin-bottom: 30px;
-            color: #ffd700;
-        }
-
-        .button-primary {
-            padding: 15px 40px;
-            font-size: 24px;
             color: #fff;
-            background-color: #ff4500;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.3s, background-color 0.3s;
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.8);
-        }
-
-        .button-primary:hover {
-            transform: scale(1.1);
-            background-color: #ff6347;
-        }
-
-        #prediction {
-            font-size: 26px;
-            color: #ffcc00;
-            margin-top: 20px;
-            text-shadow: 1px 1px 10px #000;
-        }
-
-        .link-button {
-            margin-top: 30px;
-            font-size: 22px;
-            color: #fff;
-            background-color: #32cd32;
-            padding: 15px 40px;
-            border-radius: 10px;
+            background-color: #ff5722;
+            text-align: center;
+            border-radius: 8px;
             text-decoration: none;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
         }
-
-        .link-button:hover {
-            background-color: #28a745;
+        .cta-button:hover {
+            background-color: #e64a19;
         }
-
-        .real-time-winner {
-            margin-top: 40px;
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .feature-list li {
             font-size: 18px;
-            color: #ff69b4;
-            animation: slide-up 2s ease infinite;
+            margin-bottom: 15px;
         }
-
-        @keyframes slide-up {
-            0% { transform: translateY(100%); opacity: 0; }
-            50% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-100%); opacity: 0; }
+        .testimonial {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+        .testimonial p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .testimonial strong {
+            color: #4caf50;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer a {
+            color: #4caf50;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>100％的中の競馬予想！</h1>
-        <p class="description">
-            今週末のレースに向けて、プロの予想を無料公開中！<br>的中率100％の予想を今すぐ確認しましょう！
-        </p>
-        <button class="button-primary" onclick="showPrediction()">予想を見る</button>
-        <p id="prediction"></p>
-        <a id="external-link" href="https://inaijhs95.my.canva.site/secret2025" class="link-button" style="display: none;">詳しい情報を見る</a>
 
-        <!-- リアルタイム当選報告 -->
-        <div class="real-time-winner">
-            <p id="winner-notification"></p>
-        </div>
+    <div class="header">
+        <h2>競馬予想サイト</h2>
     </div>
 
-    <script>
-        const horses = [
-            "イクイノックス",
-            "ジャスティンパレス",
-            "リバティアイランド",
-            "スターズオンアース",
-            "ヴェラアズール",
-            "ソングライン",
-            "ドウデュース",
-            "ディープボンド",
-            "シャフリヤール",
-            "ピクシーナイト"
-        ];
+    <div class="main">
+        <h1>的中率100％！<br>プロの競馬予想をお届け</h1>
+        <p class="description">
+            今週末のレースに向けて、最新の競馬予想を公開中！<br>プロの分析とデータに基づいた予想を今すぐ確認しましょう。
+        </p>
 
-        const venues = ["東京", "京都", "中山", "阪神", "新潟", "福島", "札幌", "函館", "中京", "小倉"];
-        const races = Array.from({ length: 12 }, (_, i) => `${i + 1}R`);
+        <a href="https://inaijhs95.my.canva.site/secret2025" class="cta-button">無料で予想を見る</a>
 
-        function getNextWeekend() {
-            const today = new Date();
-            const dayOfWeek = today.getDay();
-            const daysUntilSaturday = (6 - dayOfWeek + 7) % 7 || 7;
-            const nextSaturday = new Date(today);
-            nextSaturday.setDate(today.getDate() + daysUntilSaturday);
+        <ul class="feature-list">
+            <li>🎯 的中率100％の予想を公開中！</li>
+            <li>📅 週末のレース情報を毎週更新！</li>
+            <li>🏇 最新の競走馬データを使用した分析！</li>
+        </ul>
 
-            return nextSaturday;
-        }
+        <div class="testimonial">
+            <p>
+                「こんなに当たる予想は初めてです！本当に驚きました！」<br>
+                <strong>- 東京都 K・Yさん</strong>
+            </p>
+        </div>
 
-        function formatDate(date) {
-            return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
-        }
+        <a href="https://inaijhs95.my.canva.site/secret2025" class="cta-button">さらに詳しく見る</a>
+    </div>
 
-        function showPrediction() {
-            const prediction = document.getElementById("prediction");
-            const link = document.getElementById("external-link");
-            const randomHorse = horses[Math.floor(Math.random() * horses.length)];
-            const venue = venues[Math.floor(Math.random() * venues.length)];
-            const race = races[Math.floor(Math.random() * races.length)];
-            const nextWeekend = getNextWeekend();
-            const dateStr = formatDate(nextWeekend);
+    <div class="footer">
+        <p>© 2024 競馬予想サイト | <a href="https://inaijhs95.my.canva.site/secret2025">プライバシーポリシー</a></p>
+    </div>
 
-            prediction.innerText = `${dateStr} ${venue} ${race} 3連単予想：${Math.floor(Math.random() * 18) + 1}-${Math.floor(Math.random() * 18) + 1}-${Math.floor(Math.random() * 18) + 1}`;
-            link.style.display = "inline-block";
-        }
-
-        function updateWinnerNotification() {
-            const winnerNotification = document.getElementById("winner-notification");
-            const venue = venues[Math.floor(Math.random() * venues.length)];
-            const nextWeekend = getNextWeekend();
-            const dateStr = formatDate(nextWeekend);
-            const initials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            const randomInitial = `${initials[Math.floor(Math.random() * initials.length)]}・${initials[Math.floor(Math.random() * initials.length)]}`;
-            const randomPrize = Math.floor(Math.random() * 200) + 50;
-
-            winnerNotification.innerHTML = `${dateStr} ${venue}競馬 ${randomInitial}さん ${randomPrize}万円的中しました！`;
-        }
-
-        setInterval(updateWinnerNotification, 5000);
-        updateWinnerNotification();
-    </script>
 </body>
 </html>
