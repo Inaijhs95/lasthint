@@ -1,115 +1,134 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>競馬予想サイト - 的中率100％！</title>
-    <style>
-        body {
-            background-color: #f8f8f8;
-            font-family: Arial, sans-serif;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            background-color: #4caf50;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-        }
-        .main {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-        h1 {
-            font-size: 30px;
-            color: #4caf50;
-            text-align: center;
-        }
-        .description {
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .cta-button {
-            display: block;
-            width: 80%;
-            max-width: 300px;
-            margin: 20px auto;
-            padding: 15px;
-            font-size: 20px;
-            color: #fff;
-            background-color: #ff5722;
-            text-align: center;
-            border-radius: 8px;
-            text-decoration: none;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        }
-        .cta-button:hover {
-            background-color: #e64a19;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            color: #777;
-        }
-        .footer a {
-            color: #4caf50;
-            text-decoration: none;
-        }
-        .hidden-link {
-            display: block;
-            margin: 20px auto;
-            text-align: center;
-        }
-        .hidden-link img {
-            width: 100px;
-            height: auto;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .hidden-link img:hover {
-            transform: scale(1.1);
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ヒント確認ページ</title>
+<style>
+    body {
+        font-family: sans-serif;
+        background: #ffffff;
+        color: #333333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #333;
+        background: #f9f9f9;
+    }
+
+    .container p {
+        line-height: 1.6;
+    }
+
+    .buttons {
+        margin-top: 20px;
+    }
+
+    .buttons a {
+        display: inline-block;
+        margin-right: 10px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #333;
+        padding: 5px 10px;
+        font-size: 0.9em;
+        transition: all 0.3s ease;
+    }
+
+    .buttons a:hover {
+        background: #333;
+        color: #fff;
+    }
+
+    .hint-section {
+        margin-top: 30px;
+        display: none;
+    }
+
+    .hint-section img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 20px 0;
+        border: 1px solid #333;
+    }
+
+    .comment {
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+    .more-hint {
+        margin-top: 20px;
+    }
+
+    .more-hint a {
+        font-size: 0.9em;
+        text-decoration: none;
+        color: #333;
+        border-bottom: 1px solid #333;
+        padding-bottom: 2px;
+    }
+
+    .more-hint a:hover {
+        color: #000;
+        border-bottom: 1px solid #000;
+    }
+</style>
 </head>
 <body>
 
-    <div class="header">
-        <h2>競馬予想サイト - プロが選ぶ的中率100％予想</h2>
+<div class="container">
+    <p>ヒントを確認しますか？</p>
+    <div class="buttons">
+        <a href="#" id="yes-button">はい</a>
+        <a href="#" id="no-button">いいえ</a>
     </div>
 
-    <div class="main">
-        <h1>的中率100％！<br>プロの競馬予想を公開中</h1>
-        <p class="description">
-            今週末のレースに向けて、最新の競馬予想を無料公開！<br>プロの分析とデータに基づいた予想を今すぐチェック！
-        </p>
-
-        <a href="https://inaijhs95.my.canva.site/secret2025" class="cta-button" onclick="recordAccess()">無料で予想を見る</a>
+    <!-- ヒント1表示エリア（文字のみ） -->
+    <div class="hint-section" id="hint1-section">
+        <div class="comment">
+            <p>鏡はここに置くようです。</p>
+        </div>
+        <div class="more-hint">
+            <a href="#" id="more-button-1">さらに見る</a>
+        </div>
     </div>
 
-    <div class="hidden-link">
-        <!-- 画像リンク追加 -->
-        <a href="https://inaijhs95.github.io/bonus?source=D">
-            <img src="riopg.png" alt="隠しリンク画像">
-        </a>
+    <!-- ヒント2表示エリア（画像使用） -->
+    <div class="hint-section" id="hint2-section">
+        <img src="hint9.png" alt="ヒント2">
+        <div class="comment">
+            <p>鏡はここに置くようです。
+            ヒントは以上です。</p>
+        </div>
     </div>
 
-    <div class="footer">
-        <p>© 2024 競馬予想サイト | <a href="https://inaijhs95.my.canva.site/secret2025">プライバシーポリシー</a></p>
-    </div>
+</div>
 
-    <script>
-        // アクセス確認のためにフラグを設定
-        function recordAccess() {
-            localStorage.setItem("access_D", "true");
-        }
-    </script>
+<script>
+    // ヒント1表示
+    document.getElementById('yes-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('hint1-section').style.display = 'block';
+    });
+
+    // ヒント2表示
+    document.getElementById('more-button-1').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('hint2-section').style.display = 'block';
+    });
+
+    document.getElementById('no-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('また後でお試しください。');
+    });
+</script>
+
 </body>
 </html>
