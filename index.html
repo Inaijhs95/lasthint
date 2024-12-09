@@ -19,6 +19,7 @@
         padding: 20px;
         border: 1px solid #333;
         background: #f9f9f9;
+        box-sizing: border-box;
     }
 
     .container p {
@@ -79,11 +80,23 @@
         color: #000;
         border-bottom: 1px solid #000;
     }
+
+    /* アクセス不可時用メッセージスタイル */
+    .access-message {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #333;
+        background: #f9f9f9;
+        box-sizing: border-box;
+        text-align: center;
+        display: none;
+    }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="hint-container">
     <p>ヒントを確認しますか？</p>
     <div class="buttons">
         <a href="#" id="yes-button">はい</a>
@@ -104,30 +117,54 @@
     <div class="hint-section" id="hint2-section">
         <img src="hint9.png" alt="ヒント2">
         <div class="comment">
-            <p>鏡はここに置くようです。
-            ヒントは以上です。</p>
+            <p>鏡はここに置くようです。<br>ヒントは以上です。</p>
         </div>
     </div>
+</div>
 
+<div class="access-message" id="access-message">
+    <p>このページは現在アクセスできません。</p>
+    <p><span id="release-datetime"></span> 以降に再度アクセスしてください。</p>
 </div>
 
 <script>
-    // ヒント1表示
-    document.getElementById('yes-button').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.getElementById('hint1-section').style.display = 'block';
-    });
+    // 公開日時の設定例
+    // 必要な日時に変更してください
+    const releaseDate = new Date("2024-12-20T00:00:00");
+    const now = new Date();
 
-    // ヒント2表示
-    document.getElementById('more-button-1').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.getElementById('hint2-section').style.display = 'block';
-    });
+    const hintContainer = document.getElementById('hint-container');
+    const accessMessage = document.getElementById('access-message');
+    const releaseDatetimeSpan = document.getElementById('release-datetime');
 
-    document.getElementById('no-button').addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('また後でお試しください。');
-    });
+    const options = {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: 'numeric', minute: 'numeric',
+        hour12: false
+    };
+    releaseDatetimeSpan.textContent = releaseDate.toLocaleString('ja-JP', options);
+
+    if (now < releaseDate) {
+        // 指定日時前ならアクセス不可
+        hintContainer.style.display = 'none';
+        accessMessage.style.display = 'block';
+    } else {
+        // 指定日時以降はアクセス可能
+        document.getElementById('yes-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('hint1-section').style.display = 'block';
+        });
+
+        document.getElementById('more-button-1').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('hint2-section').style.display = 'block';
+        });
+
+        document.getElementById('no-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('また後でお試しください。');
+        });
+    }
 </script>
 
 </body>
